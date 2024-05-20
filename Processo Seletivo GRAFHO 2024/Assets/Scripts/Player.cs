@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     private float speed = 9f;
-    private float rotZ;
-
     private Rigidbody2D rb;
+    public static bool dead = false;
+
+    public GameObject gameOverPanel;
 
     void Start()
     {
@@ -18,7 +22,6 @@ public class Player : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-
 
         Vector3 mouse = Input.mousePosition;
         mouse = Camera.main.ScreenToWorldPoint(mouse);
@@ -31,7 +34,6 @@ public class Player : MonoBehaviour
         {
             moveCharacter();
         }
-
     }
 
     void moveCharacter()
@@ -51,6 +53,16 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(0, speed * Time.deltaTime, 0);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(this.gameObject);
+            gameOverPanel.SetActive(true);
+            dead = true;
         }
     }
 }
