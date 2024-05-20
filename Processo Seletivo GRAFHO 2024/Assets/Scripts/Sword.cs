@@ -9,11 +9,11 @@ using UnityEngine.UI;
 public class Sword : MonoBehaviour
 {
     [SerializeField] private Text scoreText;
-    public static int score = 0;
+    public static int score;
 
     void Start()
     {
-
+        score = 0;
     }
 
     void Update()

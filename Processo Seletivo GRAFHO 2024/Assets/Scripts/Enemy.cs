@@ -1,23 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    private Transform playerPosition;
-    private GameObject playerObject;
+    public Transform playerPosition;
+    public GameObject playerObject;
     public float enemyVelocity;
     public float distanceToStop;
 
     // Start is called before the first frame update
     void Start()
     {
+        float temp = Time.time;
         rb = GetComponent<Rigidbody2D>();
+
+
         playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         playerObject = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     // Update is called once per frame

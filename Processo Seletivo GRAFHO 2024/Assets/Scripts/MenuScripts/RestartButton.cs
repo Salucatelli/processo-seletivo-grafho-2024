@@ -8,11 +8,10 @@ using UnityEngine.UI;
 
 public class RestartButton : MonoBehaviour
 {
-    [SerializeField] private Text scoreText;
     public void OnButtonPress()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        scoreText.text = " ";
+        SceneManager.LoadScene("Game");
+        Time.timeScale = 1;
         Player.dead = false;
     }
 }

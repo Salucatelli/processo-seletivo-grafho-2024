@@ -9,8 +9,8 @@ public class Spawner : MonoBehaviour
 
     private float currentSpawnTime;
     private int score;
-    private float MaxTimeBetweenSpawns = 2;
-    private bool dead;
+    private float MaxTimeBetweenSpawns = 1.5f;
+    public bool dead;
 
     void Start()
     {
@@ -19,27 +19,30 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        dead = Player.dead;
-        currentSpawnTime -= Time.deltaTime;
+        if (Time.time > 3)
+        {
+            dead = Player.dead;
+            currentSpawnTime -= Time.deltaTime;
 
-        if (currentSpawnTime <= 0 && !dead)
-        {
-            SpawnEnemy();
-        }
+            if (score >= 5)
+            {
+                MaxTimeBetweenSpawns = 0.5f;
+            }
+            else if (score >= 15)
+            {
+                MaxTimeBetweenSpawns = 0.25f;
+            }
+            else if (score >= 30)
+            {
+                MaxTimeBetweenSpawns = 0.15f;
+            }
 
-        score = Sword.score;
+            if (currentSpawnTime <= 0 && dead == false)
+            {
+                SpawnEnemy();
+            }
 
-        if (score >= 5)
-        {
-            MaxTimeBetweenSpawns = 1.5f;
-        }
-        else if (score >= 15)
-        {
-            MaxTimeBetweenSpawns = 2f;
-        }
-        else if (score >= 30)
-        {
-            MaxTimeBetweenSpawns = 4f;
+            score = Sword.score;
         }
     }
 

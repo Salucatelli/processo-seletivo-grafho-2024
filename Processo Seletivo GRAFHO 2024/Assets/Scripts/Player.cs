@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Data.Common;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+
+
     private float speed = 9f;
     private Rigidbody2D rb;
     public static bool dead = false;
@@ -20,8 +23,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
         Vector3 mouse = Input.mousePosition;
         mouse = Camera.main.ScreenToWorldPoint(mouse);
@@ -29,7 +34,6 @@ public class Player : MonoBehaviour
         Vector2 direction = new Vector2(mouse.x - transform.position.x, mouse.y - transform.position.y);
         transform.up = direction;
 
-        //rb.velocity = new Vector2(horizontal * speed, vertical * speed);
         if (mouse != transform.position)
         {
             moveCharacter();
@@ -60,9 +64,16 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(this.gameObject);
-            gameOverPanel.SetActive(true);
-            dead = true;
+            //Destroy(this.gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        // rb.bodyType = RigidbodyType2D.Static;
+        Time.timeScale = 0;
+        gameOverPanel.SetActive(true);
+        dead = true;
     }
 }
