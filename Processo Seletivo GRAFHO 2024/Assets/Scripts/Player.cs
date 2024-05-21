@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public static bool dead = false;
 
     public GameObject gameOverPanel;
+    public GameObject scoreText;
+    public Text FinalScore;
 
     void Start()
     {
@@ -64,16 +66,16 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //Destroy(this.gameObject);
             Die();
         }
     }
 
     private void Die()
     {
-        // rb.bodyType = RigidbodyType2D.Static;
         Time.timeScale = 0;
         gameOverPanel.SetActive(true);
+        scoreText.SetActive(false);
+        FinalScore.text = "Final Score: " + Sword.score;
         dead = true;
     }
 }
